@@ -14,10 +14,10 @@ class ViewController: UIViewController, TagListViewDelegate {
     @IBOutlet weak var biggerTagListView: TagListView!
     @IBOutlet weak var biggestTagListView: TagListView!
     @IBOutlet weak var horizontalScrollView: TagListView!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         tagListView.delegate = self
         tagListView.addTag("TagListView")
         tagListView.addTag("TEAChart")
@@ -25,16 +25,18 @@ class ViewController: UIViewController, TagListViewDelegate {
         tagListView.addTag("To Be Removed")
         tagListView.addTag("Quark Shell")
         tagListView.removeTag("To Be Removed")
-        tagListView.addTag("On tap will be removed").onTap = { [weak self] tagView in
+        tagListView.addTag("On tap will be removed").onTap = {
+            [weak self] tagView in
             self?.tagListView.removeTagView(tagView)
         }
-        
+
         let tagView = tagListView.addTag("gray")
         tagView.tagBackgroundColor = UIColor.grayColor()
-        tagView.onTap = { tagView in
+        tagView.onTap = {
+            tagView in
             print("Don’t tap me!")
         }
-        
+
         biggerTagListView.delegate = self
         biggerTagListView.textFont = UIFont.systemFontOfSize(15)
         biggerTagListView.shadowRadius = 2
@@ -45,7 +47,7 @@ class ViewController: UIViewController, TagListViewDelegate {
         biggerTagListView.addTag("Pomotodo")
         biggerTagListView.addTag("Halo Word")
         biggerTagListView.alignment = .Center
-        
+
         biggestTagListView.delegate = self
         biggestTagListView.textFont = UIFont.systemFontOfSize(24)
         biggestTagListView.addTag("all")
@@ -56,8 +58,8 @@ class ViewController: UIViewController, TagListViewDelegate {
         biggestTagListView.addTag("to")
         biggestTagListView.addTag("us")
         biggestTagListView.alignment = .Right
-        
-        
+
+
         horizontalScrollView.delegate = self
         horizontalScrollView.addTag("TagListView")
         horizontalScrollView.addTag("TEAChart")
@@ -65,12 +67,13 @@ class ViewController: UIViewController, TagListViewDelegate {
         horizontalScrollView.addTag("To Be Removed")
         horizontalScrollView.addTag("Quark Shell")
         horizontalScrollView.removeTag("To Be Removed")
-        horizontalScrollView.addTag("On tap will be removed").onTap = { [weak self] tagView in
+        horizontalScrollView.addTag("On tap will be removed").onTap = {
+            [weak self] tagView in
             self?.horizontalScrollView.removeTagView(tagView)
         }
-        
+
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -81,10 +84,14 @@ class ViewController: UIViewController, TagListViewDelegate {
         print("Tag pressed: \(title), \(sender)")
         tagView.selected = !tagView.selected
     }
-    
+
     func tagRemoveButtonPressed(title: String, tagView: TagView, sender: TagListView) {
         print("Tag Remove pressed: \(title), \(sender)")
         sender.removeTagView(tagView)
     }
-}
 
+    func tagListViewFrameWillChange(sender: TagListView) {
+        print("frame changed!!!!!")
+    }
+
+}

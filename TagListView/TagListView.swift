@@ -11,6 +11,7 @@ import UIKit
 @objc public protocol TagListViewDelegate {
     optional func tagPressed(title: String, tagView: TagView, sender: TagListView) -> Void
     optional func tagRemoveButtonPressed(title: String, tagView: TagView, sender: TagListView) -> Void
+    optional func tagListViewFrameWillChange(sender: TagListView) -> Void
 }
 
 @IBDesignable
@@ -204,6 +205,11 @@ public class TagListView: UIView {
     private(set) var rows = 0 {
         didSet {
             invalidateIntrinsicContentSize()
+        }
+        willSet {
+            if newValue != rows {
+                delegate?.tagListViewFrameWillChange?(self)
+            }
         }
     }
     private var scrollView:UIScrollView?
